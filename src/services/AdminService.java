@@ -30,11 +30,11 @@ public class AdminService {
         order.setStatus(newstatus);
 
         // restore stock if order is cancelled
-        if (newstatus.equals("cancelled") && oldStatus.equals("cancelled")) {
+        if (newstatus.equals("cancelled") && ((oldStatus.equals("completed") || oldStatus.equals("pending")))) {
             restoreStock(order);
         }
         // Deduct stock if order is reactivated (e.g., from Cancelled to Pending)
-        if (oldStatus.equals("Cancelled") && !newstatus.equals("Cancelled")) {
+        if (oldStatus.equals("cancelled")  && (newstatus.equals("pending")  || newstatus.equals("completed"))) {
             deductStock(order);
         }
 
